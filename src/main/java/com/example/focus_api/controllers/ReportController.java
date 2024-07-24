@@ -23,6 +23,13 @@ public class ReportController {
         return ResponseEntity.ok(allReports);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity getReportById(@PathVariable("id") String id) {
+        return reportRepository.findById(id)
+                .map(report -> ResponseEntity.ok(report))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     public ResponseEntity createReport(@RequestBody @Valid RequestReport data) {
         Reports reports = new Reports(data);

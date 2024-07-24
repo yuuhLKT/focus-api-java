@@ -24,6 +24,13 @@ public class FeedbackController {
         return ResponseEntity.ok(allFeedbacks);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity getFeedbackById(@PathVariable("id") String id) {
+        return feedbackRepository.findById(id)
+                .map(feedback -> ResponseEntity.ok(feedback))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     public ResponseEntity createFeedback(@RequestBody @Valid RequestFeedback data) {
         Feedbacks feedbacks = new Feedbacks(data);
